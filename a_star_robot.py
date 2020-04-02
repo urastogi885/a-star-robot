@@ -19,7 +19,7 @@ Add various parameters as input arguments from user
 script, start_node_data, goal_node_data, robot_params, step_size, theta, animation = argv
 
 if __name__ == '__main__':
-    # Convert input arguments into their required data types
+    # Convert input arguments into their required data types and scale them according to the size of the map
     start_node_data = tuple(ast.literal_eval(start_node_data))
     start_node_data = (scaling_factor * start_node_data[1], scaling_factor * start_node_data[0],
                        start_node_data[2] // int(theta))
@@ -28,22 +28,23 @@ if __name__ == '__main__':
                       goal_node_data[2] // int(theta))
     robot_params = tuple(ast.literal_eval(robot_params))
     # Initialize the map class
-    obstacle_map = Map(int(robot_params[0]), int(robot_params[1]))
+    obstacle_map = Map(scaling_factor * int(robot_params[0]), scaling_factor * int(robot_params[1]))
     check_image = obstacle_map.check_img
-    # Initialize the explorer class
-    explorer = Explorer(start_node_data, goal_node_data, int(step_size), int(theta))
     # Check validity of start and goal nodes
     if not (check_node_validity(check_image, start_node_data[1], obstacle_map.height - start_node_data[0])
             and check_node_validity(check_image, goal_node_data[1], obstacle_map.height - goal_node_data[0])):
         print('One of the points lie in obstacle space!!\nPlease try again')
         quit()
+    # Initialize the explorer class to find the goal node
+    # Initialize explorer only after checking start and goal points
+    explorer = Explorer(start_node_data, goal_node_data, int(step_size), int(theta))
     # Get start time for exploration
     start_time = time()
     # Start exploration
     explorer.explore(check_image)
     # Show time for exploration
     print('Exploration Time:', time() - start_time)
-    if int(animation) == 1:
+    if int(animation):
         # Get start time for animation
         start_time = time()
         # Display animation of map exploration to find goal
