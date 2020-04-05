@@ -58,15 +58,14 @@ class Explorer:
         # Evaluate euclidean distance between goal node and current node and return it
         return sqrt((self.goal_node[0] - node[0])**2 + (self.goal_node[1] - node[1])**2)
 
-    def get_final_weight(self, node, node_cost):
+    def get_final_weight(self, node):
         """
         Get final weight for a-star
         :param node: tuple containing coordinates and orientation of the current node
-        :param node_cost: cost-to-come for the current node
         :return: final weight for according to method
         """
         # Add cost-to-goal and cost-to-come to get final cost and return it
-        return self.get_heuristic_score(node) + node_cost
+        return self.get_heuristic_score(node) + self.base_cost[node[0]][node[1]][node[2]]
 
     def get_child_base_cost(self, parent_node, child_node):
         """
@@ -114,7 +113,7 @@ class Explorer:
         self.generated_nodes.append(self.start_node)
         self.parent[self.start_node[0]][self.start_node[1]][self.start_node[2]] = constants.start_parent
         # Add start node to priority queue
-        node_queue.put((self.get_final_weight(self.start_node, 0), self.start_node))
+        node_queue.put((self.get_final_weight(self.start_node), self.start_node))
         # Start exploring
         while not node_queue.empty():
             # Get node with minimum total cost
@@ -134,7 +133,7 @@ class Explorer:
                     # Update cost-to-come of child node
                     self.base_cost[y][x][theta] = self.get_child_base_cost(current_node[1], (y, x, theta))
                     # Add child node to priority queue
-                    node_queue.put((self.get_final_weight((y, x), self.base_cost[y][x][theta]), (y, x, theta)))
+                    node_queue.put((self.get_final_weight((y, x, theta)), (y, x, theta)))
                     self.generated_nodes.append((y, x, theta))
                     # Update parent of the child node
                     self.parent[y][x][theta] = np.ravel_multi_index([current_node[1][0], current_node[1][1],
@@ -189,11 +188,11 @@ class Explorer:
                 cv2.line(map_img, (self.path_nodes[i - 1][1], self.map_size[0] - self.path_nodes[i - 1][0]),
                          (self.path_nodes[i][1], self.map_size[0] - self.path_nodes[i][0]), blue)
                 video_output.write(map_img)
-            # Add start and goal node to the video frame
+            # Draw start and goal node to the video frame in the form of filled circle
             cv2.circle(map_img, (self.path_nodes[-1][1], self.map_size[0] - self.path_nodes[-1][0]),
-                       constants.scaling_factor, red)
+                       constants.scaling_factor, red, -1)
             cv2.circle(map_img, (self.path_nodes[0][1], self.map_size[0] - self.path_nodes[0][0]),
-                       constants.scaling_factor, green)
+                       constants.scaling_factor, green, -1)
             for _ in range(1000):
                 video_output.write(map_img)
         video_output.release()
