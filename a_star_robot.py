@@ -12,20 +12,22 @@ Add various parameters as input arguments from user
 :param start_node_data: a tuple of 3 values: start coordinates and orientation
 :param goal_node_data: a tuple of 3 values: goal coordinates and orientation
 :param robot_params: a tuple of 2 values: robot radius and clearance
-:param step_size: integer value from 1-10 for translation of the robot
-:param theta: angular step between each action
-:param animation: 1 to show animation otherwise use 0
+:param step_params: a tuple of 2 values: step-size and angular step-size
+                    step-size: integer value from 1-10 for translation of the robot
+                    angular ste-size: angular step between each action (preferably an integer that is a factor of 180)
+:param animation: 1 to generate video otherwise use 0
 """
-script, start_node_data, goal_node_data, robot_params, step_size, theta, animation = argv
+script, start_node_data, goal_node_data, robot_params, step_params, animation = argv
 
 if __name__ == '__main__':
     # Convert input arguments into their required data types and scale them according to the size of the map
+    step_params = tuple(ast.literal_eval(step_params))
     start_node_data = tuple(ast.literal_eval(start_node_data))
     start_node_data = (scaling_factor * start_node_data[1], scaling_factor * start_node_data[0],
-                       start_node_data[2] // int(theta))
+                       start_node_data[2] // step_params[1])
     goal_node_data = tuple(ast.literal_eval(goal_node_data))
     goal_node_data = (scaling_factor * goal_node_data[1], scaling_factor * goal_node_data[0],
-                      goal_node_data[2] // int(theta))
+                      goal_node_data[2] // step_params[1])
     robot_params = tuple(ast.literal_eval(robot_params))
     # Initialize the map class
     obstacle_map = Map(scaling_factor * int(robot_params[0]), scaling_factor * int(robot_params[1]))
@@ -37,7 +39,7 @@ if __name__ == '__main__':
         quit()
     # Initialize the explorer class to find the goal node
     # Initialize explorer only after checking start and goal points
-    explorer = Explorer(start_node_data, goal_node_data, int(step_size), int(theta))
+    explorer = Explorer(start_node_data, goal_node_data, step_params[0], step_params[1])
     # Get start time for exploration
     start_time = time()
     # Start exploration
