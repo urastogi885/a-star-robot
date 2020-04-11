@@ -7,10 +7,14 @@
 - [Naman Gupta](https://github.com/namangupta98/)
 
 ## Overview
-This project is an implementation of A* algorithm on a rigid non-holonomic robot to traverse through a known environment. The project is divided into three main phases.
+This project is an implementation of A* algorithm on a rigid non-holonomic robot to traverse through a known environment. The project is divided into 4 phases.
 
 - Phase-1: Installation of ROS and V-REP
 - Phase-2: Implementation of A* on a non-holonomic robot
+- Phase-3: Implementation of A* on a differential-drive robot
+- Phase-4: Implementation of A* on Turtlebot using ROs
+
+Phase 3 and 4 have been implemented on another [repository](https://github.com/urastogi885/a-star-turtlebot)
 
 
 <p align="center">
