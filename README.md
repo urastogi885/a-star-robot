@@ -22,12 +22,6 @@ Phase 3 and 4 have been implemented on another [repository](https://github.com/u
   <br><b>Figure 1 - Exploration of a non-holonomic rigid robot using A* to find optimal path from start to goal</b><br>
 </p>
 
-## For TAs
-
-- Further improvements have been made to the project after the submission for Project-3 Phase-2.
-- The exploration has been reduced to 10 seconds from 2 hours for the start and goal node configuration: 50,30,60 and 150,150,0 respectively.
-- You can access the submission version from the [*release section*](https://github.com/namangupta98/a-star-robot/releases)
-
 ## Dependencies
 
 - Python3
