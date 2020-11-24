@@ -1,6 +1,6 @@
 # A* Robot
 [![Build Status](https://travis-ci.org/namangupta98/a-star-robot.svg?branch=master)](https://travis-ci.org/namangupta98/a-star-robot)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/namangupta98/a-star-robot/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/namangupta98/a-star-robot/blob/master/LICENSE)
 
 ## Authors
 - [Umang Rastogi](https://github.com/urastogi885/)
